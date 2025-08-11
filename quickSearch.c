@@ -46,7 +46,6 @@ void writeFile(void)
 }
 void readfiles(unsigned char *array)
 {
-    // printf("Val at Array index 0 :%d\n", array[0]);
     unsigned long array_size_in_bits = 16000000;
     struct dirent *de;
 
@@ -58,32 +57,21 @@ void readfiles(unsigned char *array)
     }
     while ((de = readdir(dr)) != NULL)
     {
-        /* printf("%s\n", de->d_name); */
-
         if ((strcmp(de->d_name, ".") == 0) || (strcmp(de->d_name, "..") == 0))
         {
-            // printf(". or .. detected\n");
             continue;
         }
         unsigned long h1 = hash_one(de->d_name);
         unsigned long h2 = hash_two(de->d_name);
-        /* printf("%u\n", h1);
-        printf("%u\n", h2); */
 
         for (int i = 0; i < 6; i++)
         {
             unsigned long combined_hash = h1 + (i * h2);
             unsigned long bit_index = combined_hash % array_size_in_bits;
             unsigned long byte_index = bit_index / 8;
-
-            // 2. Find the correct light switch (bit)
             int bit_position = bit_index % 8;
 
             array[byte_index] |= (1 << bit_position);
-            /*  printf("Array index:%u file name : %s\n", byte_index, de->d_name);
-             printf("File: %s -> Bit Index: %lu -> Byte Index: %lu -> Bit Position: %d\n", de->d_name, bit_index, byte_index, bit_position); */
-            printf("%d\n", bit_index);
-            // printf("%d\n", array[array_index]);
         }
     }
     writeFile();
