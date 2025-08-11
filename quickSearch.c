@@ -92,7 +92,7 @@ void search(char *file, unsigned char *array)
 {
     my_array = malloc(file_size * sizeof(unsigned char));
     unsigned long array_size_in_bits = 16000000;
-    //printf("%s\n", file);
+    // printf("%s\n", file);
     FILE *file_pointer = fopen("my_filter.bin", "rb");
 
     if (file_pointer == NULL)
@@ -128,8 +128,9 @@ void search(char *file, unsigned char *array)
 
 void main(int argc, char **argv)
 {
-    if (argc == 1){
-        printf("Please specify a file name or use --index-files to index the files\n");
+    if (argc == 1)
+    {
+        printf("Use --index-files to index the files\n Use --search [filename] to search for files");
         return;
     }
     if (strcmp("--index-files", argv[1]) == 0)
@@ -137,6 +138,11 @@ void main(int argc, char **argv)
         printf("Files are being indexed. please wait...\n");
         loadbin();
     }
-    if(strcmp("--search", argv[1]) == 0)
+    else if (strcmp("--search", argv[1]) == 0)
         search(argv[2], my_array);
+    else
+    {
+        printf("Use --index-files to index the files\n Use --search [filename] to search for files");
+        return;
+    }
 }
