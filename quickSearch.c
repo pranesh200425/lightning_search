@@ -128,13 +128,15 @@ void search(char *file, unsigned char *array)
 
 void main(int argc, char **argv)
 {
-    if (argc == 1)
-        printf("Please specify a file name or use index-file to index the files\n");
-    if (strcmp("index-file", argv[1]) == 0)
+    if (argc == 1){
+        printf("Please specify a file name or use --index-files to index the files\n");
+        return;
+    }
+    if (strcmp("--index-files", argv[1]) == 0)
     {
-        printf("Files are being indexed. please wait...");
+        printf("Files are being indexed. please wait...\n");
         loadbin();
     }
-    else
-        search(argv[1], my_array);
+    if(strcmp("--search", argv[1]) == 0)
+        search(argv[2], my_array);
 }
